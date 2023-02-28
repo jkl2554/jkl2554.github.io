@@ -21,5 +21,7 @@ $env:HUGO_ENV="production" && hugo -t github-style -d docs
 Write-Output "Updating gh-pages branch"
 Set-Location docs && git add --all && git commit -m "Publishing to gh-pages (publish.sh)"
 
-#Write-Output "Pushing to github"
-#git push --all
+Write-Output "Pushing to github"
+git push --all
+
+Set-Location ../
