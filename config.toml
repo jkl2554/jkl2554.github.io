@@ -1,4 +1,4 @@
-baseURL = "https://blog.hyugo.org"
+baseURL = ""
 languageCode = "ko-kr"
 title = "Hyugo's blog"
 theme = "github-style"
