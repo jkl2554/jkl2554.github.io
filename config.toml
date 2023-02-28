@@ -33,9 +33,6 @@ pygmentsUseClasses = true
     distractionFreeMode = false # Enable hot key (cmd|ctrl + enter) submit comment.    
   [[params.links]]
     title = "Link"
-    href = "https://github.com/jkl2554"
-  [[params.links]]
-    title = "Link2"
     href = "https://blog.hyugo.org"
     icon = "/images/avatar.png"
 
