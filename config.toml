@@ -36,8 +36,8 @@ pygmentsUseClasses = true
     href = "https://github.com/jkl2554"
   [[params.links]]
     title = "Link2"
-    href = "https://github.hyugo.org"
-    icon = "https://github.hyugo.org/images/avatar.png"
+    href = "https://blog.hyugo.org"
+    icon = "/images/avatar.png"
 
 [frontmatter]
   lastmod = ["lastmod", ":fileModTime", ":default"]
