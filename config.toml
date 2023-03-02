@@ -21,7 +21,7 @@ pygmentsUseClasses = true
   
   [[params.links]]
     title = "Link"
-    href = "https://blog.hyugo.org"
+    href = "https://jkl2554.github.io"
     icon = "/images/avatar.png"
 
 [frontmatter]
