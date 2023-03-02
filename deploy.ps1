@@ -16,7 +16,7 @@ Write-Output "Removing existing files"
 Remove-Item -Recurse -Force public/* -Exclude "CNAME"
 
 Write-Output "Generating site"
-$env:HUGO_ENV="production" && hugo -t github-style
+$env:HUGO_ENV="production" && hugo -t github-style-plus
 
 Write-Output "Updating gh-pages branch"
 Set-Location public && git add --all && git commit -m "Publishing to gh-pages (publish.sh)"
