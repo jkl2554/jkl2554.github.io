@@ -1,16 +1,16 @@
 if($(git status -s)){
     Write-Output "The working directory is dirty. Please commit any pending changes."
-    #exit 1;
+    exit 1;
 }
 
 # Write-Output "Deleting old docsation"
-Remove-Item -Recurse -Force public/* -Exclude "CNAME"
+Remove-Item -Recurse -Force public/* -Exclude CNAME
 # mkdir public
 git worktree prune
 Remove-Item -Recurse -Force .git/worktrees/public/
 
 # Write-Output "Checking out gh-pages branch into public"
-git worktree add -B gh-pages2 public origin/gh-pages
+git worktree add -B gh-pages public origin/gh-pages
 
 Write-Output "Removing existing files"
 Remove-Item -Recurse -Force public/* -Exclude "CNAME"
