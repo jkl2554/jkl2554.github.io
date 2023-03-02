@@ -4,8 +4,8 @@ if($(git status -s)){
 }
 
 # Write-Output "Deleting old docsation"
-Remove-Item -Recurse -Force public
-mkdir public
+Remove-Item -Recurse -Force public -Exclude CNAME
+# mkdir public
 git worktree prune
 Remove-Item -Recurse -Force .git/worktrees/public/
 
