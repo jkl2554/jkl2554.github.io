@@ -13,7 +13,7 @@ Write-Output "Checking out gh-pages branch into docs"
 git worktree add -B gh-pages docs origin/gh-pages
 
 Write-Output "Removing existing files"
-Remove-Item -Recurse -Force docs/*
+Remove-Item -Recurse -Force docs/* -Exclude "CNAME"
 
 Write-Output "Generating site"
 $env:HUGO_ENV="production" && hugo -t github-style -d docs
