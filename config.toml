@@ -21,7 +21,18 @@ pygmentsUseClasses = true
   avatar = "/images/avatar.png"
   location = "Korea"
   userStatusEmoji = "😎"
-  enableGitalk = false
+  enableGitalk = true
+
+  [params.gitalk]
+    repo = "repo"
+    owner = "jkl2554"
+    admin = "jkl2554"
+    id = "location.pathname"
+    labels = "gitalk"
+    perPage = 30
+    pagerDirection = "last"
+    createIssueManually = true
+    distractionFreeMode = false
 
   [[params.links]]
     title = "Link"

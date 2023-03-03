@@ -20,6 +20,8 @@ jobs:
         with:
           hugo-version: 'latest'
           # extended: true
+      - name: set params.gitalk
+        run: hugo config set params.gitalk.clientID ${{ secrets.CLIENTID }} && hugo config set params.gitalk.clientSecret ${{ secrets.CLIENTSECRET }}
 
       - name: Build
         run: hugo --minify
