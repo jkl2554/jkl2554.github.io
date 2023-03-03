@@ -5,7 +5,9 @@ on:
     branches:
       - main  # Set a branch that will trigger a deployment
   pull_request:
-
+env:
+  HUGO_PARAMS_GITALK_CLIENTID="${{ secrets.CLIENTID }}"
+  HUGO_PARAMS_GITALK_CLIENTSECRET="${{ secrets.CLIENTSECRET }}"
 jobs:
   deploy:
     runs-on: ubuntu-22.04
@@ -20,9 +22,7 @@ jobs:
         with:
           hugo-version: 'latest'
           # extended: true
-      - name: set params.gitalk
-        run: hugo config set params.gitalk.clientID ${{ secrets.CLIENTID }} && hugo config set params.gitalk.clientSecret ${{ secrets.CLIENTSECRET }}
-
+      
       - name: Build
         run: hugo --minify
 
