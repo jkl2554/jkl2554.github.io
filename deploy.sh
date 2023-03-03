@@ -19,7 +19,7 @@ echo "Removing existing files"
 rm -rf docs/*
 
 echo "Generating site"
-env HUGO_ENV="production" hugo -t github-style -d docs
+env HUGO_ENV="production" hugo -t github-style-plus -d docs
 
 echo "Updating gh-pages branch"
 cd docs && git add --all && git commit -m "Publishing to gh-pages (publish.sh)"
