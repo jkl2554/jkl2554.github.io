@@ -24,6 +24,7 @@ pygmentsUseClasses = true
   enableGitalk = true
 
   [params.gitalk]
+    clientID = "68d0975908af3d3c7a46"
     repo = "jkl2554.github.io"
     owner = "jkl2554"
     admin = "jkl2554"
