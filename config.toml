@@ -21,8 +21,8 @@ pygmentsUseClasses = true
   avatar = "/images/avatar.png"
   location = "Korea"
   userStatusEmoji = "😎"
-  enableGitalk = true
-  
+  enableGitalk = false
+
   [[params.links]]
     title = "Link"
     href = "https://jkl2554.github.io"
