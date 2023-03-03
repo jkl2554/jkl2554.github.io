@@ -4,24 +4,24 @@ if($(git status -s)){
 }
 
 # Write-Output "Deleting old docsation"
-Remove-Item -Recurse -Force public/* -Exclude CNAME
-# mkdir public
+Remove-Item -Recurse -Force docs/* -Exclude CNAME
+# mkdir docs
 git worktree prune
-Remove-Item -Recurse -Force .git/worktrees/public/
+Remove-Item -Recurse -Force .git/worktrees/docs/
 
-# Write-Output "Checking out gh-pages branch into public"
-git worktree add -B gh-pages public origin/gh-pages
+# Write-Output "Checking out gh-pages branch into docs"
+git worktree add -B gh-pages docs origin/gh-pages
 
 Write-Output "Removing existing files"
-Remove-Item -Recurse -Force public/* -Exclude "CNAME"
+Remove-Item -Recurse -Force docs/* -Exclude "CNAME"
 
 Write-Output "Generating site"
-$env:HUGO_ENV="production" && hugo -t github-style-plus
+$env:HUGO_ENV="production" && hugo -t github-style-plus -d docs
 
 Write-Output "Updating gh-pages branch"
-Set-Location public && git add --all && git commit -m "Publishing to gh-pages (publish.sh)"
+Set-Location docs && git add --all && git commit -m "Publishing to gh-pages (publish.sh)"
 
-Write-Output "Pushing to github"
-git push --all
+#Write-Output "Pushing to github"
+#git push --all
 
 Set-Location ../
