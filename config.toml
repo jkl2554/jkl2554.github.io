@@ -18,6 +18,7 @@ pygmentsUseClasses = true
   sponsorLink = "Your external sponsor link; For me, I use buymeacoffee link" # Set the link if you want to have a sponsor button and let audience know the your donation link
   lastmod = true
   favicon = "/images/github.png"
+  avatar = "/images/avatar.png"
   location = "Korea"
   userStatusEmoji = "😎"
   enableGitalk = true
