@@ -5,9 +5,6 @@ on:
     branches:
       - main  # Set a branch that will trigger a deployment
   pull_request:
-env:
-  HUGO_PARAMS_GITALK_CLIENTID: "${{ secrets.CLIENTID }}"         # GITALK App Client ID
-  HUGO_PARAMS_GITALK_CLIENTSECRET: "${{ secrets.CLIENTSECRET }}" # GITALK App Client Secret
 jobs:
   deploy:
     runs-on: ubuntu-22.04
