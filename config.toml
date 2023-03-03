@@ -34,6 +34,7 @@ pygmentsUseClasses = true
     pagerDirection = "last"
     createIssueManually = true
     distractionFreeMode = false
+    proxy = "https://cors-anywhere.azm.workers.dev/https://github.com/login/oauth/access_token"
 
   [[params.links]]
     title = "Link"
