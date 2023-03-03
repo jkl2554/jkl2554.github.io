@@ -24,7 +24,7 @@ pygmentsUseClasses = true
   enableGitalk = true
 
   [params.gitalk]
-    repo = "blog_gitalk"
+    repo = "jkl2554.github.io"
     owner = "jkl2554"
     admin = "jkl2554"
     id = "location.pathname"
