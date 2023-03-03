@@ -24,6 +24,7 @@ pygmentsUseClasses = true
   enableGitalk = true
 
   [params.gitalk]
+    accessToken = "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"
     repo = "jkl2554.github.io"
     owner = "jkl2554"
     admin = "jkl2554"
