@@ -1,7 +1,7 @@
 baseURL = "https://jkl2554.github.io"
 languageCode = "ko-kr"
 title = "Hyugo's blog"
-theme = "github-style-plus"
+theme = "github-style"
 pygmentsCodeFences = true
 pygmentsUseClasses = true
 
