@@ -1,0 +1,57 @@
+baseURL = "https://blog.kurtstories.com"
+languageCode = "zh-tw"
+title = "Kurt Liao"
+theme = "github-style"
+googleAnalytics = "UA-123456-789"
+pygmentsCodeFences = true
+pygmentsUseClasses = true
+
+[params]
+  author = "Kurt"
+  description = "Embrace who you are, and go with the flow🔹"
+  github = "kurt-liao"
+  enableGithubFollowers = true # Set to true to show your real github followers(params.github is required)
+  twitter = "cn91288"
+  linkedin = "kurt-liao-07360b17b"
+  email = "vermouth0226@gmail.com"
+  stackoverflow="10389571"
+  lastmod = true
+  userStatusEmoji = "😉"
+  favicon = "/images/avatar.png"
+  avatar = "/images/avatar.png"
+  location = "Taiwan"
+  enableGitalk = true
+  rss = true
+  enableLocalSearch = true # Set to true if you want to have keyword search locally(params.rss true is required)
+  sponsorLink = "Your external sponsor link; For me, I use buymeacoffee link" # Set the link if you want to have a sponsor button and let audience know the your donation link
+  customStyleFile = "your css file name"
+  gtmId = "your gtm id"
+    
+  [params.gitalk]
+    clientID = "Your Github Client ID" # Generate token from github settings  
+    clientSecret = "Your Github Client Secret" # Generate token from github settings  
+    repo = "kurt-liao.github.io" # 你要用來存放 issue 的 repo 名字(不一定要是你的 github page repo)
+    owner = "kurt-liao" # 你的GitHub ID
+    admin = "kurt-liao" # 你的GitHub ID
+    id = "location.pathname" # 文章頁面的連結就是ID
+    labels = "gitalk" # Github issue labels. If you used to use Gitment, you can change it
+    perPage = 15 # Pagination size, with maximum 100.
+    pagerDirection = "last" # Comment sorting direction, available values are 'last' and 'first'.
+    createIssueManually = true # 設置為true，如果是管理員登錄，會自動創建issue，如果是false，需要管理員手動添加第一個評論(issue)
+    distractionFreeMode = false # Enable hot key (cmd|ctrl + enter) submit comment.    
+    proxy = "https://cors-anywhere.azm.workers.dev/https://github.com/login/oauth/access_token" # 可以自行添加反向代理
+  [[params.links]]
+    title = "Link"
+    href = "https://github.com/kurt-liao"
+  [[params.links]]
+    title = "Link2"
+    href = "https://github.com/kurt-liao/github-style-plus"
+    icon = "https://blog.kurtstories.com/images/avatar.png"
+
+  [[params.customOrgs]]
+    link = "https://github.com/kurt-project"
+    img = "kurt-project.png" #Put your assets in static folder
+    name = "kurt-project"
+
+[frontmatter]
+  lastmod = ["lastmod", ":fileModTime", ":default"]
