@@ -8,6 +8,7 @@ on:
 env:
   HUGO_PARAMS_GITALK_CLIENTID: "${{ secrets.CLIENTID }}"         # GITALK App Client ID
   HUGO_PARAMS_GITALK_CLIENTSECRET: "${{ secrets.CLIENTSECRET }}" # GITALK App Client Secret
+  HUGO_PARAMS_GITALK_ACCESSTOKEN: "${{ secrets.ACCESSTOKEN }}" # GITALK Access Token
 jobs:
   deploy:
     runs-on: ubuntu-22.04
