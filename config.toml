@@ -4,7 +4,6 @@ title = "Hyugo's blog"
 theme = "github-style-plus_edit"
 pygmentsCodeFences = true
 pygmentsUseClasses = true
-
 [params]
   author = "Hyugo"
   description = "Hyugo's blog"
