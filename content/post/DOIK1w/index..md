@@ -1,6 +1,6 @@
 ---
 title: "Database Operator In Kubernetes study 1주차"
-date: 2023-10-21T19:22:46+09:00
+date: 2023-10-21T23:22:46+09:00
 draft: false
 ---
 # 학습내용 정리
