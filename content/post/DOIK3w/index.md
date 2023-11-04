@@ -114,6 +114,8 @@ pgbench -h pgbench-hyugo.postgres.database.azure.com -p 5432 -i -U testadm -s 10
 
 ##### 초기화 결과
 ![초기화 결과](image-16.png)
+##### 테이블 사이즈
+![테이블 사이즈](image-23.png)
 
 ## 테스트 수행
 pgbench -h pgbench-hyugo.postgres.database.azure.com -p 5432 -U testadm pgbench_db --time 30 --client 3
