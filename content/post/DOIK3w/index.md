@@ -10,7 +10,7 @@ draft: false
 ### pg 및 cnpg plugin 설치
 - [docs](https://cloudnative-pg.io/documentation/current/installation_upgrade/)
 - [cnpg plugin](https://cloudnative-pg.io/documentation/current/kubectl-plugin/#install)
-### cnpg를 통한 확인
+### `kubectl cnpg status mycluster`
 ![cnpg status](image.png)
 ### Grafana 모니터링
 ![Grafana](image-3.png)
