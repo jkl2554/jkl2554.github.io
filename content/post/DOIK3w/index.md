@@ -1,5 +1,5 @@
 ---
-title: "DOIK3w"
+title: "Database Operator In Kubernetes study 3주차"
 date: 2023-11-05T03:13:33+09:00
 draft: false
 ---
