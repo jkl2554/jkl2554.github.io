@@ -1,7 +1,7 @@
 ---
 title: "DOIK3w"
 date: 2023-11-05T03:13:33+09:00
-draft: true
+draft: false
 ---
 
 
