@@ -11,7 +11,7 @@ draft: false
 이 자습서에서는 `Azure CLI 2.53.1`, `kubectl v1.28.3`을 사용합니다.  
 이 자습서에서는 Managed Identity Using Workload Identity를 사용해서 ExternalDNS를 설치합니다.  
 *[External-dns Azure 튜토리얼 페이지](https://github.com/kubernetes-sigs/external-dns/blob/master/docs/tutorials/azure.md#managed-identity-using-workload-identity)
-
+<!--more-->
 ## Azure AKS Cluster 배포
 ```sh
 AZURE_AKS_RESOURCE_GROUP="myaks-RG" # name of resource group where aks cluster was created

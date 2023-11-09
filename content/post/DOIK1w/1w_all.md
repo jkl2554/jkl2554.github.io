@@ -3,6 +3,7 @@ title: "Database Operator In Kubernetes study 1주차_코드 포함"
 date: 2023-10-21T23:22:46+09:00
 draft: true
 ---
+<!--more-->
 # 학습내용 정리
 ## Kubernetes란?
 - 컨테이너화된 애플리케이션을 관리해주는 오케스트레이터
