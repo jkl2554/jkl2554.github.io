@@ -18,16 +18,17 @@ AZURE_AKS_RESOURCE_GROUP="myaks-RG" # name of resource group where aks cluster w
 AZURE_AKS_CLUSTER_NAME="myaks" # name of aks cluster previously created
 LOCATION="koreacentral"
 
-## 클러스터 신규 배포
+# 클러스터 신규 배포
 az group create -n ${AZURE_AKS_RESOURCE_GROUP} -l ${LOCATION}
 
 az aks create -n ${AZURE_AKS_CLUSTER_NAME} -g ${AZURE_AKS_RESOURCE_GROUP} --network-plugin azure \
               --enable-oidc-issuer --enable-workload-identity --generate-ssh-keys
 
-## 기존 클러스터 업그레이드
+# 기존 클러스터 업그레이드
 # az aks update --resource-group ${AZURE_AKS_RESOURCE_GROUP} --name ${AZURE_AKS_CLUSTER_NAME} --enable-oidc-issuer --enable-workload-identity
-## kubectl 명령어 
-az aks get-credentials -n ${AZURE_AKS_CLUSTER_NAME} -g ${AZURE_AKS_RESOURCE_GROUP}
+# kubeconfig 파일 생성 및 환경변수 설정
+az aks get-credentials -n ${AZURE_AKS_CLUSTER_NAME} -g ${AZURE_AKS_RESOURCE_GROUP} -f ./kubeconfig --overwrite-existing
+export KUBECONFIG="$(pwd)/kubeconfig"
 ```
 
 ## AGIC Add-on 배포
