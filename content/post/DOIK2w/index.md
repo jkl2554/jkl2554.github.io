@@ -3,7 +3,7 @@ title: "Database Operator In Kubernetes study 2주차"
 date: 2023-10-27T19:24:51+09:00
 draft: false
 ---
-
+<!--more-->
 # 학습내용 정리
 ## 쿠버네티스 오퍼레이터
 - **CRD** Custom Resource Definition : 오퍼레이터로 사용할 상태 관리용 객체들의 Spec 을 정의
