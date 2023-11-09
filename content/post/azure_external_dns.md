@@ -1,7 +1,7 @@
 ---
 title: "Azure AKS ExernalDNS 설치"
 date: 2023-11-08T13:07:45+09:00
-draft: true
+draft: false
 ---
 
 # Azure AKS ExeternalDNS
