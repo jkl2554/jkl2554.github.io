@@ -79,6 +79,10 @@ IDENTITY_CLIENT_ID=$(az identity show --resource-group "${CLUSTER_RESOURCE_GROUP
 DNS_NAME_SERVER=$(az network dns zone show -n ${AZURE_DNS_ZONE} -g ${AZURE_DNS_ZONE_RESOURCE_GROUP} \
                   --query nameServers[0] -o tsv)
 
+# DNS 네임 서버 목록 확인 아래 서버를 DNS Hosting업체의 네임서버에 설정해주면 public DNS Query가 가능
+az network dns zone show -n ${AZURE_DNS_ZONE} -g ${AZURE_DNS_ZONE_RESOURCE_GROUP} --query nameServers -o tsv
+
+
 # Azure DNS Zone에 권한 부여
 DNS_ID=$(az network dns zone show --name "${AZURE_DNS_ZONE}" \
   --resource-group "${AZURE_DNS_ZONE_RESOURCE_GROUP}" --query "id" --output tsv)
