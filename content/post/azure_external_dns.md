@@ -26,6 +26,7 @@ az aks create -n ${AZURE_AKS_CLUSTER_NAME} -g ${AZURE_AKS_RESOURCE_GROUP} --netw
 
 # 기존 클러스터 업그레이드
 # az aks update --resource-group ${AZURE_AKS_RESOURCE_GROUP} --name ${AZURE_AKS_CLUSTER_NAME} --enable-oidc-issuer --enable-workload-identity
+
 # kubeconfig 파일 생성 및 환경변수 설정
 az aks get-credentials -n ${AZURE_AKS_CLUSTER_NAME} -g ${AZURE_AKS_RESOURCE_GROUP} -f ./kubeconfig --overwrite-existing
 export KUBECONFIG="$(pwd)/kubeconfig"
