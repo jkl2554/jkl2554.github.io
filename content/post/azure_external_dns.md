@@ -55,6 +55,8 @@ APPGW_ID=$(az network application-gateway show -n ${APPGW_NAME} -g ${CLUSTER_RES
 az aks enable-addons -n ${AZURE_AKS_CLUSTER_NAME} -g ${AZURE_AKS_RESOURCE_GROUP} -a ingress-appgw --appgw-id ${APPGW_ID}
 ```
 ## Azure External DNS 설치
+### Azure DNS Zone 권한 설정
+#### AKS에서 사용할 Managed Identity 배포
 ```sh
 ## Managed Identity 배포
 IDENTITY_NAME="ExternalDNS-${AZURE_AKS_CLUSTER_NAME}"
@@ -62,7 +64,6 @@ IDENTITY_NAME="ExternalDNS-${AZURE_AKS_CLUSTER_NAME}"
 # create a managed identity
 az identity create --resource-group "${CLUSTER_RESOURCE_GROUP}" --name "${IDENTITY_NAME}"
 ```
-### Azure DNS Zone 권한 설정
 #### Azure DNS 리소스 생성
 ```sh
 # Azure DNS Zone 생성
@@ -71,6 +72,10 @@ AZURE_DNS_ZONE="hyugo.biz" # Azure DNS Zone 이름 여기선 hyugo.biz 사용
 
 az group create -n ${AZURE_DNS_ZONE_RESOURCE_GROUP} -l ${LOCATION}
 az network dns zone create -n ${AZURE_DNS_ZONE} -g ${AZURE_DNS_ZONE_RESOURCE_GROUP}
+
+```
+#### Azure DNS Zone 권한 부여
+```sh
 # Client ID 구성
 IDENTITY_CLIENT_ID=$(az identity show --resource-group "${CLUSTER_RESOURCE_GROUP}" \
   --name "${IDENTITY_NAME}" --query "clientId" --output tsv)
@@ -79,7 +84,7 @@ IDENTITY_CLIENT_ID=$(az identity show --resource-group "${CLUSTER_RESOURCE_GROUP
 DNS_NAME_SERVER=$(az network dns zone show -n ${AZURE_DNS_ZONE} -g ${AZURE_DNS_ZONE_RESOURCE_GROUP} \
                   --query nameServers[0] -o tsv)
 
-# DNS 네임 서버 목록 확인 아래 서버를 DNS Hosting업체의 네임서버에 설정해주면 public DNS Query가 가능
+# DNS 네임 서버 목록 확인, 아래 서버를 DNS Hosting업체의 네임서버에 설정해주면 public DNS Query가 가능
 az network dns zone show -n ${AZURE_DNS_ZONE} -g ${AZURE_DNS_ZONE_RESOURCE_GROUP} --query nameServers -o tsv
 
 
@@ -89,9 +94,8 @@ DNS_ID=$(az network dns zone show --name "${AZURE_DNS_ZONE}" \
 
 az role assignment create --role "DNS Zone Contributor" \
   --assignee "${IDENTITY_CLIENT_ID}" --scope "${DNS_ID}"
-```
 
-```sh
+# 페더레이션 자격증명 부여
 OIDC_ISSUER_URL="$(az aks show -n ${AZURE_AKS_CLUSTER_NAME} -g ${AZURE_AKS_RESOURCE_GROUP} --query "oidcIssuerProfile.issuerUrl" -otsv)"
 
 az identity federated-credential create -n ${IDENTITY_NAME} -g ${CLUSTER_RESOURCE_GROUP} \
@@ -100,9 +104,9 @@ az identity federated-credential create -n ${IDENTITY_NAME} -g ${CLUSTER_RESOURC
 ```
 *페더레이션 자격증명의 namespace 및 ServiceAccount를 확인해야합니다.`system:serviceaccount:<NAMESPACE>:<SERVICE_ACCOUNT>`
 
-## option1:manifest
+### option1:manifest
 
-### ExternalDNS Config Secret 배포
+#### ExternalDNS Config Secret 배포
 ```sh
 cat <<EOF > azure.json
 {
@@ -189,10 +193,10 @@ kubectl apply -f ExternalDNS-RBAC.yaml
 
 ```
 
-## option2:helm
+### option2:helm
 *[ExternalDNS Artifect Hub 페이지](https://artifacthub.io/packages/helm/external-dns/external-dns)  
 
-### values.yaml
+#### values.yaml
 ```sh
 
 cat << EOF > ExternalDNS-values.yaml
@@ -228,7 +232,7 @@ helm upgrade --install azure-external-dns external-dns/external-dns --version 1.
 ```
 
 ## ExternalDNS 테스트
-### 로그 체크
+#### 로그 체크
 ```sh
 # deployment logs
 kubectl logs -f $(kubectl get po -l "azure.workload.identity/use=true" -o jsonpath={.items[0].metadata.name})
@@ -244,7 +248,7 @@ kubectl logs -f $(kubectl get po -l "azure.workload.identity/use=true" -o jsonpa
 # time="2023-11-09T05:30:24Z" level=info msg="All records are already up to date"
 ```
 
-### 기능 테스트
+#### 기능 테스트
 ```sh
 ## test
 kubectl apply -f - <<EOF
