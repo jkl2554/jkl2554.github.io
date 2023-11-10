@@ -63,28 +63,36 @@ IDENTITY_NAME="ExternalDNS-${AZURE_AKS_CLUSTER_NAME}"
 az identity create --resource-group "${CLUSTER_RESOURCE_GROUP}" --name "${IDENTITY_NAME}"
 ```
 ### Azure DNS Zone 권한 설정
+#### Azure DNS 리소스 생성
 ```sh
-AZURE_DNS_ZONE_RESOURCE_GROUP="<DNS RG>" # name of resource group where dns zone is hosted
-AZURE_DNS_ZONE="<DNS ZONE>" # DNS zone name like example.com or sub.example.com
+# Azure DNS Zone 생성
+AZURE_DNS_ZONE_RESOURCE_GROUP="dns-rg" # Azure DNS Zone 리소스 그룹 이름
+AZURE_DNS_ZONE="hyugo.biz" # Azure DNS Zone 이름 여기선 hyugo.biz 사용
 
-# fetch identity client id from managed identity created earlier
+az group create -n ${AZURE_DNS_ZONE_RESOURCE_GROUP} -l ${LOCATION}
+az network dns zone create -n ${AZURE_DNS_ZONE} -g ${AZURE_DNS_ZONE_RESOURCE_GROUP}
+# Client ID 구성
 IDENTITY_CLIENT_ID=$(az identity show --resource-group "${CLUSTER_RESOURCE_GROUP}" \
   --name "${IDENTITY_NAME}" --query "clientId" --output tsv)
-# fetch DNS id used to grant access to the managed identity
+
+# Azure DNS Zone Name Server 확인
+DNS_NAME_SERVER=$(az network dns zone show -n ${AZURE_DNS_ZONE} -g ${AZURE_DNS_ZONE_RESOURCE_GROUP} \
+                  --query nameServers[0] -o tsv)
+
+# Azure DNS Zone에 권한 부여
 DNS_ID=$(az network dns zone show --name "${AZURE_DNS_ZONE}" \
   --resource-group "${AZURE_DNS_ZONE_RESOURCE_GROUP}" --query "id" --output tsv)
-# RESOURCE_GROUP_ID=$(az group show --name "${AZURE_DNS_ZONE_RESOURCE_GROUP}" --query "id" --output tsv)
 
 az role assignment create --role "DNS Zone Contributor" \
   --assignee "${IDENTITY_CLIENT_ID}" --scope "${DNS_ID}"
-# az role assignment create --role "Reader" \
-#   --assignee "${IDENTITY_CLIENT_ID}" --scope "${RESOURCE_GROUP_ID}"
 ```
 
 ```sh
 OIDC_ISSUER_URL="$(az aks show -n ${AZURE_AKS_CLUSTER_NAME} -g ${AZURE_AKS_RESOURCE_GROUP} --query "oidcIssuerProfile.issuerUrl" -otsv)"
 
-az identity federated-credential create --name ${IDENTITY_NAME} --identity-name ${IDENTITY_NAME} --resource-group ${CLUSTER_RESOURCE_GROUP} --issuer "${OIDC_ISSUER_URL}" --subject "system:serviceaccount:default:external-dns"
+az identity federated-credential create -n ${IDENTITY_NAME} -g ${CLUSTER_RESOURCE_GROUP} \
+                            --identity-name ${IDENTITY_NAME} --issuer "${OIDC_ISSUER_URL}" \
+                            --subject "system:serviceaccount:default:external-dns"
 ```
 *페더레이션 자격증명의 namespace 및 ServiceAccount를 확인해야합니다.`system:serviceaccount:<NAMESPACE>:<SERVICE_ACCOUNT>`
 
@@ -269,13 +277,12 @@ kubectl get ingress
 
 
 # 도메인 체크
-nslookup test.hyugo.biz
-# Server:         168.63.129.16
-# Address:        168.63.129.16#53
+nslookup test.hyugo.biz ${DNS_NAME_SERVER}
+# Server:         ns1-33.azure-dns.com.
+# Address:        150.171.10.33#53
 # 
-# Non-authoritative answer:
 # Name:   test.hyugo.biz
-# Address: 20.200.221.231
+# Address: 20.214.167.11
 
 #### 현재 helm의 이미지가 registry.k8s.io/external-dns/external-dns:v0.13.6이여서 Azure DNS 삭제 동작이 작동하지 않음.#####
 # ingress 삭제
@@ -289,15 +296,21 @@ kubectl delete ingress test-ingress
 
 
 # 도메인 체크
-nslookup test.hyugo.biz
-# Server:         168.63.129.16
-# Address:        168.63.129.16#53
+nslookup test.hyugo.biz ${DNS_NAME_SERVER}
+# Server:         ns1-33.azure-dns.com.
+# Address:        150.171.10.33#53
 # 
 # ** server can't find test.hyugo.biz: NXDOMAIN
 
 ```
 ## 리소스 정리
-```sh
-az group delete -n ${AZURE_AKS_RESOURCE_GROUP}
 
+```sh
+# AKS 클러스터 리소스 그룹 삭제
+az group delete -n ${AZURE_AKS_RESOURCE_GROUP}
+```
+
+```sh
+# Azure DNS Zone 리소스그룹 삭제, 자신의 DNS 일 경우 사용하지 말 것
+az group delete -n ${AZURE_DNS_ZONE_RESOURCE_GROUP}
 ```
