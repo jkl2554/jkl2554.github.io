@@ -8,7 +8,7 @@ draft: false
 # Azure AKS ExeternalDNS
 ## 선행조건 및 설명
 이 자습서에서는 Azure Kubernetes Service를 사용하여 Azure DNS에 대한 ExternalDNS를 설정하는 방법을 설명합니다.  
-이 자습서에서는 >=0.13.6 버전의 ExternalDNS를 사용해야 합니다.  
+이 자습서에서는 >=0.13.6 버전의 ExternalDNS를 사용합니다.  
 이 자습서에서는 `Azure CLI 2.53.1`, `kubectl v1.28.3`을 사용합니다.  
 이 자습서에서는 Managed Identity Using Workload Identity를 사용해서 ExternalDNS를 설치합니다.  
 *[External-dns Azure 튜토리얼 페이지](https://github.com/kubernetes-sigs/external-dns/blob/master/docs/tutorials/azure.md#managed-identity-using-workload-identity)
