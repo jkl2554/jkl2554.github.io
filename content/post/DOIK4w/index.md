@@ -1,9 +1,10 @@
 ---
-title: "DOIK4w"
+title: "Database Operator In Kubernetes study 4주차"
 date: 2023-11-10T14:53:25+09:00
 draft: false
 ---
 <!--more-->
+# DOIK 4주차 mongoDB
 ```sh
 MYNICK=hyugo
 kubectl get secret $MYNICK-secrets
@@ -108,5 +109,13 @@ kubectl get-all -n psmdb
 kubectl get deploy,pod
 kubectl get svc,ep $MYNICK-mongos
 
+![샤딩](image.png)
+![샤딩2](image-1.png)
+![샤딩3](image-2.png)
+![샤딩 status](image-3.png)
+![샤딩 status2](image-4.png)
+![샤딩 데이터 확인1](image-5.png)
+![샤딩 데이터 확인2](image-6.png)
+![샤딩 확인](image-7.png)
 ```
 
