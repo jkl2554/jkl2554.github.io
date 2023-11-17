@@ -1,7 +1,7 @@
 ---
 title: "Database Operator In Kubernetes study 4주차"
 date: 2023-11-10T14:53:25+09:00
-draft: false
+draft: true
 ---
 <!--more-->
 # DOIK 4주차 mongoDB
