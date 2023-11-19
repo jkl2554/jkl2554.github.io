@@ -1,7 +1,7 @@
 ---
 title: "DOIK5w"
 date: 2023-11-14T10:48:30+09:00
-draft: true
+draft: false
 ---
 # DOIK 5주차 Kafka
 *이번 실습은 Azure AKS에서 수행해 보았습니다. 
