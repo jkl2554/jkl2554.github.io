@@ -609,7 +609,8 @@ drwxr-xr-x     - ubuntu  4 Jun 00:34     ├── mytopic2-1
 
 
 # xxd 툴로 00000000000000000000.log 의 hexdump 내용 확인 : 보낸 메시지 내용 확인, 로그 파일에 저장된 메시지는 컨슈머가 읽어갈 수 있음
-kubectl exec -it -n kafka my-cluster-kafka-0 -c kafka -- cat /var/lib/kafka/data-0/kafka-log0/mytopic2-0/00000000000000000000.log | xxd
+# kubectl exec -it -n kafka my-cluster-kafka-0 -c kafka -- cat /var/lib/kafka/data-0/kafka-log0/mytopic2-0/00000000000000000000.log | xxd
+# xxd커맨드 설치 필요
 ...
 00000040: 0001 0a68 656c 6c6f 0000 0000 0000 0000  ...hello........
 00000050: 0100 0000 3d00 0000 0002 5259 97e5 0000  ....=.....RY....
@@ -618,4 +619,39 @@ kubectl exec -it -n kafka my-cluster-kafka-0 -c kafka -- cat /var/lib/kafka/data
 00000080: 0001 0000 0001 1600 0000 010a 776f 726c  ............worl
 00000090: 6400 0000 0000 0000 0002 0000 0039 0000  d............9..
 ```
+### 메시지 키를 통한 전달 순서 보장 및 분산
+```sh
+# 토픽 정보 확인 : kakfa-ui
+```
+![토픽 정보](image-51.png)  
+![Alt text](image-52.png)  
+```sh
+# 토픽에 데이터(메시지키+메시지값) 컨슈머 확인 : 파티션0
+kubectl exec -it ds/myclient -- kafka-console-consumer.sh --bootstrap-server $SVCDNS --topic mytopic2 --partition 0 --property print.key=true --property key.separator=":"
 
+# 토픽에 데이터(메시지키+메시지값) 컨슈머 확인 : 파티션1
+kubectl exec -it ds/myclient -- kafka-console-consumer.sh --bootstrap-server $SVCDNS --topic mytopic2 --partition 1 --property print.key=true --property key.separator=":" 
+
+# 토픽에 데이터(메시지키+메시지값) 넣어보기
+kubectl exec -it ds/myclient -- kafka-console-producer.sh --bootstrap-server $SVCDNS --topic mytopic2 --property "parse.key=true" --property "key.separator=:" <<EOF
+key1:0
+key1:1
+key1:2
+key2:3
+key2:4
+key2:5
+EOF
+
+# 모니터링 파티션 번호, 현재까지 가져간 레코드의 오프셋, 파티션 마지막 레코드의 오프셋, 컨슈머 랙 LAG, 컨슈머 ID, 호스트 정보 확인
+kubectl exec -it ds/myclient -- kafka-consumer-groups.sh --bootstrap-server $SVCDNS --group mygroup --describe print.key=true --property key.separator="-"
+
+```
+![메시지 확인](image-55.png)
+```sh
+GROUP           TOPIC           PARTITION  CURRENT-OFFSET  LOG-END-OFFSET  LAG             CONSUMER-ID     HOST            CLIENT-ID
+mygroup         mytopic2        0          225             228             3               -               -               -
+mygroup         mytopic2        1          75              78              3               -               -               -
+
+# 토픽 삭제 (kubectl native)
+kubectl delete kafkatopics -n kafka mytopic2
+```
