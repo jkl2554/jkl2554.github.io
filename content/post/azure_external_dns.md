@@ -80,13 +80,6 @@ az network dns zone create -n ${AZURE_DNS_ZONE} -g ${AZURE_DNS_ZONE_RESOURCE_GRO
 IDENTITY_CLIENT_ID=$(az identity show --resource-group "${CLUSTER_RESOURCE_GROUP}" \
   --name "${IDENTITY_NAME}" --query "clientId" --output tsv)
 
-# Azure DNS Zone Name Server 확인
-DNS_NAME_SERVER=$(az network dns zone show -n ${AZURE_DNS_ZONE} -g ${AZURE_DNS_ZONE_RESOURCE_GROUP} \
-                  --query nameServers[0] -o tsv)
-
-# DNS 네임 서버 목록 확인, 아래 서버를 DNS Hosting업체의 네임서버에 설정해주면 public DNS Query가 가능
-az network dns zone show -n ${AZURE_DNS_ZONE} -g ${AZURE_DNS_ZONE_RESOURCE_GROUP} --query nameServers -o tsv
-
 
 # Azure DNS Zone에 권한 부여
 DNS_ID=$(az network dns zone show --name "${AZURE_DNS_ZONE}" \
@@ -101,6 +94,13 @@ OIDC_ISSUER_URL="$(az aks show -n ${AZURE_AKS_CLUSTER_NAME} -g ${AZURE_AKS_RESOU
 az identity federated-credential create -n ${IDENTITY_NAME} -g ${CLUSTER_RESOURCE_GROUP} \
                             --identity-name ${IDENTITY_NAME} --issuer "${OIDC_ISSUER_URL}" \
                             --subject "system:serviceaccount:default:external-dns"
+
+# Azure DNS Zone Name Server 확인
+DNS_NAME_SERVER=$(az network dns zone show -n ${AZURE_DNS_ZONE} -g ${AZURE_DNS_ZONE_RESOURCE_GROUP} \
+                  --query nameServers[0] -o tsv)
+
+# DNS 네임 서버 목록 확인, 아래 서버를 DNS Hosting업체의 네임서버에 설정해주면 public DNS Query가 가능
+az network dns zone show -n ${AZURE_DNS_ZONE} -g ${AZURE_DNS_ZONE_RESOURCE_GROUP} --query nameServers -o tsv
 ```
 *페더레이션 자격증명의 namespace 및 ServiceAccount를 확인해야합니다.`system:serviceaccount:<NAMESPACE>:<SERVICE_ACCOUNT>`
 
