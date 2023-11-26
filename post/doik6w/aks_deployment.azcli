@@ -1,0 +1,3 @@
+AZURE_AKS_CLUSTER_NAME=myaks
+AZURE_AKS_RESOURCE_GROUP=myaks_rg
+az aks update --resource-group ${AZURE_AKS_RESOURCE_GROUP} --name ${AZURE_AKS_CLUSTER_NAME} --enable-oidc-issuer --enable-workload-identity
