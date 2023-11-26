@@ -22,8 +22,8 @@ LOCATION="koreacentral"
 az group create -n ${AZURE_AKS_RESOURCE_GROUP} -l ${LOCATION}
 
 az aks create -n ${AZURE_AKS_CLUSTER_NAME} -g ${AZURE_AKS_RESOURCE_GROUP} --network-plugin azure \
-              --enable-oidc-issuer --enable-workload-identity --generate-ssh-keys
-
+              --enable-oidc-issuer --enable-workload-identity --generate-ssh-keys -s Standard_b2s
+size
 # 기존 클러스터 업그레이드
 # az aks update --resource-group ${AZURE_AKS_RESOURCE_GROUP} --name ${AZURE_AKS_CLUSTER_NAME} --enable-oidc-issuer --enable-workload-identity
 

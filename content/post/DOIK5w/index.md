@@ -16,6 +16,17 @@ draft: false
 - Node 3개
 - kubernetes version 1.27.7
 - node sku: Standard_B2s
+```sh
+AZURE_AKS_RESOURCE_GROUP="myaks-RG" # name of resource group where aks cluster was created
+AZURE_AKS_CLUSTER_NAME="myaks" # name of aks cluster previously created
+LOCATION="koreacentral"
+# 클러스터 신규 배포
+az group create -n ${AZURE_AKS_RESOURCE_GROUP} -l ${LOCATION}
+
+az aks create -n ${AZURE_AKS_CLUSTER_NAME} -g ${AZURE_AKS_RESOURCE_GROUP} --network-plugin azure \
+              --enable-oidc-issuer --enable-workload-identity --generate-ssh-keys -s Standard_B2s \
+              --kubernetes-version 1.27.7 --node-count 3 -z 1 2 3
+```
 - Cloud Shell 에서 배포 수행
 - [Azure Cloud Shell 기본 설치 도구](https://learn.microsoft.com/ko-kr/azure/cloud-shell/features#pre-installed-tools)
 - 기타 설치 도구(.local/bin/): envsubst, yh
