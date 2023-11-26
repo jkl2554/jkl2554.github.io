@@ -14,6 +14,7 @@ draft: false
 *[External-dns Azure 튜토리얼 페이지](https://github.com/kubernetes-sigs/external-dns/blob/master/docs/tutorials/azure.md#managed-identity-using-workload-identity)
 ## Azure AKS Cluster 배포
 ```sh
+# AKS 배포 변수 설정
 AZURE_AKS_RESOURCE_GROUP="myaks-RG" # name of resource group where aks cluster was created
 AZURE_AKS_CLUSTER_NAME="myaks" # name of aks cluster previously created
 LOCATION="koreacentral"
@@ -34,9 +35,11 @@ export KUBECONFIG="$(pwd)/kubeconfig"
 
 ## AGIC Add-on 배포
 ```sh
+# AGW 변수 설정
 APPGW_NAME="agic-appgw"
 APPGW_SUBNET="${APPGW_NAME}-subnet"
 
+# 배포된 AKS 에서 변수 불러오기
 CLUSTER_RESOURCE_GROUP="$(az aks show -g ${AZURE_AKS_RESOURCE_GROUP} -n ${AZURE_AKS_CLUSTER_NAME} --query "nodeResourceGroup" -o tsv)" 
 CLUSTER_VNET=$(az network vnet list -g ${CLUSTER_RESOURCE_GROUP} -o tsv --query "[0].name")
 
@@ -58,10 +61,12 @@ az aks enable-addons -n ${AZURE_AKS_CLUSTER_NAME} -g ${AZURE_AKS_RESOURCE_GROUP}
 ### Azure DNS Zone 권한 설정
 #### AKS에서 사용할 Managed Identity 배포
 ```sh
-## Managed Identity 배포
+## Managed Identity 변수 설정
 IDENTITY_NAME="ExternalDNS-${AZURE_AKS_CLUSTER_NAME}"
 
-# create a managed identity
+# 배포된 AKS 에서 변수 불러오기
+CLUSTER_RESOURCE_GROUP="$(az aks show -g ${AZURE_AKS_RESOURCE_GROUP} -n ${AZURE_AKS_CLUSTER_NAME} --query "nodeResourceGroup" -o tsv)" 
+# managed identity 배포
 az identity create --resource-group "${CLUSTER_RESOURCE_GROUP}" --name "${IDENTITY_NAME}"
 ```
 #### Azure DNS 리소스 생성
