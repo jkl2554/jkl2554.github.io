@@ -211,13 +211,13 @@ stackablectl demo list
 [제공 데모]  
 
 
-## Demo1: minio-Taxi-Data
+## Demo1: trino-Taxi-Data
 ### Demo 정보 확인
 ```sh
-stackablectl demo describe minio-taxi-data
+stackablectl demo describe trino-taxi-data
 ```
 
-![Demo minio-taxi-data](image-4.png)
+![Demo trino-taxi-data](image-4.png)
 
 ### Demo 설치
 ```sh
@@ -225,7 +225,7 @@ stackablectl demo describe minio-taxi-data
 watch -d "kubectl get pod -n stackable-operators;echo;kubectl get pod,job,svc,pvc"
 
 # 데모 설치 : 데이터셋 다운로드 job 포함 8분 정도 소요
-stackablectl demo install minio-taxi-data
+stackablectl demo install trino-taxi-data
 ```
 ![배포 히스토리](image-5.png)  
 [배포 히스토리]  
