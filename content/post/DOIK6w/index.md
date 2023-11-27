@@ -349,6 +349,8 @@ kubectl apply -f minio-ingress.yaml
 kubectl get ingress minio-ingress
 # 접속 주소
 echo http://minio.$AZURE_DNS_ZONE
+# 접속 계정
+# admin / adminadmin
 ```
 #### superset-ingress 배포
 ```sh
@@ -384,6 +386,8 @@ kubectl apply -f superset-ingress.yaml
 kubectl get ingress superset-ingress
 # 접속 주소 
 echo http://superset.$AZURE_DNS_ZONE
+# 접속 계정
+# admin / adminadmin
 ```
 ![배포 확인](image-12.png)  
 [배포 확인]  
@@ -423,6 +427,8 @@ kubectl apply -f trino-elb.yaml
 kubectl get svc trino-coordinator-lb
 # 접속 주소 
 echo https://$(kubectl get svc trino-coordinator-lb -o=jsonpath={.status.loadBalancer.ingress[0].ip}):8443
+# 접속 계정
+# admin / adminadmin
 ```
 
 ![배포 확인](image-13.png)  
